@@ -1,0 +1,40 @@
+spring:
+
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8889/realms/elearning
+        registration:
+          keycloak:
+            provider: keycloak
+            client-id: sb-api-client
+            client-secret: GVdWRYQVTCRoSSXzE1SeL2UGMV0TrVDN
+            scope:
+              - openid
+              - profile
+              - email
+  application:
+    name: gateway-bff
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: elearning-api
+              uri: http://localhost:1236
+              predicates:
+                - Path=/v1/**
+              filters:
+                - RewritePath=/v1/(?<segment>.*), /api/v1/$\{segment}
+
+
+            - id: elearning-app
+              uri: http://localhost:3000
+              predicates:
+                - Path=/**
+              filters:
+                - RewritePath=/web/(?<segment>.*), /$\\{segment}
+server:
+  port: 1235
