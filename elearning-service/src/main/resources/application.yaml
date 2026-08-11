@@ -1,0 +1,32 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/ISTAD
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5432/e_learning_db
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: raz123
+
+  application:
+    name: demo
+server:
+  port: 1234
+keycloak:
+  server-url: http://localhost:8080
+  client-id: register-client
+  client-secret: 5O43gJK7Sx95XgCLmEQ4IYdf2E9XTRoo
+  realm: master
+  target-realm:
+
+---
+spring:
+  config:
+    activate:
+      on-profile:
+        - docker
